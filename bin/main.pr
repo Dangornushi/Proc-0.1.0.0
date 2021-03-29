@@ -1,0 +1,9 @@
+fn sub(w) {
+    return 0
+}
+
+fn main(0) {
+    int x1 = 12
+    print(x1)
+    return 0
+}

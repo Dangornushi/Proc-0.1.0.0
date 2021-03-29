@@ -1,0 +1,9 @@
+
+sub(w):
+pop w;
+main(0):
+mode>int;
+mov x1, 12;
+print(x1):
+ret sub, 0;
+end;
