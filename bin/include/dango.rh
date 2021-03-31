@@ -1,5 +1,15 @@
-print(word):
+print(strword):
+fode>int;
+mode>str;
 pop word;
 msg word;
-ret print 0;
+ret print, 0;
+end;
+
+putint(intword):
+fode>int;
+mode>int;
+pop word;
+msg word;
+ret putint, 0;
 end;

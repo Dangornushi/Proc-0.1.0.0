@@ -1,9 +1,9 @@
 #include "main.hpp"
 
-void VM ( map<string, string> func, string funcname, map <string, int> intvall, map <string, string> strvall ) {
+void VM ( map<string, string> func, string funcname, map <string, int> intvall, map <string, string> strvall, int loopj ) {
     vector<string> vec = split( func[funcname], "3b" ), vec2, vec3;
     map <string, string> strin;
-    string vdata, ans, a, b, mode, anser;
+    string vdata, ans, a, b, mode, fode, anser;
     stringstream ss, ss2;
 
     int y, x, popc=0, callc=0;
@@ -11,17 +11,19 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
         vdata = vec[i];
         vdata = regex_replace( vdata, regex("22"),"20");
         if ( vdata != "" ) {
-            
             if ( vdata.find( "61646420" ) != string::npos ) {
                 string mark = "616464" ;
                 intvall = calcproc( intvall, mark, mode, vdata );
             }
             
-            if ( vdata.find( "737562" ) != string::npos ) {
+            if ( vdata.find( "73756200" ) != string::npos ) {
                 // TODO : This is sub / [-]
-                string mark = "73756";
-                intvall = calcproc( intvall, mark, mode, vdata );
-                // void calcproc( map<string, int>intvall, string mark, string mode, string vdata ) 
+                string base = replace( vdata, "73756200" );
+                string ans = strpri( split( base, "2c20" )[0] );
+                string vall = strpri( split( base, "2c20" )[1] );
+                if ( intkeyfind( intvall, vall ) != true ) {
+                    intvall[ans] = intvall[ans] - atoi( vall.c_str() ) - loopj;
+                }
             }
             
             if ( vdata.find( "6d756c20" ) != string::npos ) {
@@ -34,13 +36,11 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 intvall = calcproc( intvall, mark, mode, vdata );
             }
             if ( vdata.find( "6d736720" ) != string::npos ) {
-
-                if ( keyfind( strvall, strpri( split( vdata, "6d736720" )[1] )  ) ) {
-                    if ( strvall[ strpri( split( vdata, "6d736720" )[1] ) ] != "" ) {
-                        cout << strvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
-                    }
+                if ( keyfind( strvall, strpri( split( vdata, "6d736720" )[1] )  ) &&
+                    intkeyfind(intvall, strpri( split( vdata, "6d736720" )[1] )  ) == false ) {
+                    cout << strvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
                 }
-                if ( intkeyfind(intvall, strpri( split( vdata, "6d736720" )[1] )  ) ) {
+                else {
                     cout << intvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
                 }
             }
@@ -50,7 +50,7 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 TODO : This is mov
                 */
                 string data, a;
-                ans = hextostring( split( split( vdata, "2c20" )[0], "6d6f7620" )[1] );
+                ans = strpri( split( split( vdata, "2c20" )[0], "6d6f7620" )[1] );
                 a = split( vdata, "2c20" )[1];
                 data = strpri( a );
                 if( mode == "int" ) {
@@ -97,11 +97,12 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                     }
                 }
                 else {
-                    arg2 = strpri( arg );strvall2 [ to_string( callc ) ] = strvall [ arg2 ];
+                    arg2 = strpri( arg );
+                    strvall2 [ to_string( callc ) ] = strvall [ arg2 ];
                     intvall2 [ to_string( callc ) ] = intvall [ arg2 ] ;
                     callc++;
                 }
-                VM( func, split( split( vdata, "63616c6c20" )[1], "5b" )[0], intvall2, strvall2 );
+                VM( func, split( split( vdata, "63616c6c20" )[1], "5b" )[0], intvall2, strvall2, loopj );
             }
             if ( vdata.find( "6a6e7020" ) != string::npos ) {
                 string base, c, badata;
@@ -110,7 +111,7 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 else { c = split( base, "2c20" )[2]; }
                 badata = strpri( vdata );
                 if ( intifj( badata, intvall, "jnp" ) == 1 ) {
-                    VM( func, c, intvall, strvall );
+                    VM( func, c, intvall, strvall, loopj );
                 }
             }
             if ( vdata.find( "6a6120" ) != string::npos ) {
@@ -123,7 +124,7 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 else { c = split( base, "2c20" )[2]; }
                 badata = strpri( vdata );
                 if ( intifj( badata, intvall, "ja" ) == 1 ) {
-                    VM( func, c, intvall, strvall );
+                    VM( func, c, intvall, strvall, loopj );
                 }
             }
             if ( vdata.find( "6a616520" ) != string::npos ) {
@@ -142,26 +143,21 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 if ( intkeyfind( intvall, a ) ) {
                     if ( intkeyfind( intvall, b ) ) {
                         if ( atoi( a.c_str() ) == atoi( b.c_str() ) ) {
-                            VM( func, c, intvall, strvall );
+                            VM( func, c, intvall, strvall, loopj );
                         }
                     }
                     else 
                     if ( atoi( a.c_str() ) == intvall[b] ) {
-                        VM( func, c, intvall, strvall );
+                        VM( func, c, intvall, strvall, loopj );
                     }
                 }                
             }
             if ( vdata.find( "706f7020" ) != string::npos ) {
                 // TODO : This is "pop"
                 string arg = strpri( split( vdata, "706f7020" )[1]);
-                if ( arg == "<arg>" ) {
-
-                }
-                else {
-                    strvall [ arg ] = strvall[ to_string( popc ) ];
-                    intvall [ arg ] = intvall[ to_string( popc ) ];
-                    popc++;
-                }
+                strvall [ arg ] = strvall[ to_string( popc ) ];
+                intvall [ arg ] = intvall[ to_string( popc ) ];
+                popc++;
             }
             if ( vdata.find( "6a6d7020" ) != string::npos ) {
                 /*
@@ -173,14 +169,39 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 string arg = strpri( split( vdata, "2c20" )[1] );
                 if ( intkeyfind( intvall, arg ) ) {
                     for ( int i = 0; i < intvall[arg]; ++i ) {
-                        VM( func, name, intvall, strvall );
+                        VM( func, name, intvall, strvall, loopj );
+                        loopj++;
                     }
                 }
                 else {
                     for ( int i = 0; i < atoi( arg.c_str() ); ++i ) {
-                        VM( func, name, intvall, strvall );
+                        VM( func, name, intvall, strvall, loopj );
+                        loopj++;
                     }
                 }
+            }
+            if ( vdata.find( "72657420" ) != string::npos ) {
+                // TODO : This is return ( ret )
+                string base = split( vdata, "72657420" )[1];
+                string funcn, arg;
+                if ( vdata.find( "0c20" ) != string::npos ) {
+                    funcn = split( base, "c20" )[0];
+                    arg = split( base, "c20" )[1];
+                }
+                else {
+                    funcn = split( base, "2c20" )[0];
+                    arg = split( base, "2c20" )[1];
+                }
+                if ( fode == "int" ) {
+                    intvall [ strpri( funcn ) ] = atoi( strpri( arg ).c_str() ) ;
+                }
+                else
+                if ( fode == "str" ) {
+                    strvall [ strpri( funcn ) ] = strpri( arg.c_str() ) ;
+                }
+            }
+            if ( vdata.find( "666f64653e" ) != string::npos ) {
+                fode = strpri( split( vdata, "3e" )[1] );
             }
         }
     }
@@ -194,7 +215,7 @@ int main( int argc, char **arg ){
     map<string, string> func;
     map <string, string> strvall;
     map <string, int> intvall;
-    int hex;
+    int hex, loopj = 0;
 
     char buf[16];
     while(!fin.eof()) {
@@ -213,6 +234,6 @@ int main( int argc, char **arg ){
             func[funcname] += vec[i];
         }
     }
-    VM( func, "6d61696e", intvall, strvall );
+    VM( func, "6d61696e", intvall, strvall, loopj );
     return 0;
 }

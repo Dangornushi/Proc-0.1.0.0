@@ -32,7 +32,7 @@ vector<string> remove(vector<string> vector, int index) ;
 bool keyfind(map<string, string> m, string v) ;
 string calc( string data, map<string, string> valls, string mark ) ;
 int ifj( string data, map<string, string> valls, string mark ) ;
-void VM ( map<string, string> func, string funcname, map <string, int> intvall, map <string, string> strvall ) ;
+void VM ( map<string, string> func, string funcname, map <string, int> intvall, map <string, string> strvall, int loopj ) ;
 vector<string> inc ( string callfunc );
 vector<int> hex(const char *string) ;
 unsigned int binToUInt(const string &str) ;

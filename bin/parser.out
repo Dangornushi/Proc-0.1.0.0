@@ -9,33 +9,31 @@ Grammar
 Rule 0     S' -> expr
 Rule 1     expr -> NAME NAME EQUAL NAME
 Rule 2     expr -> NAME NAME EQUAL NAME PLUS NAME
-Rule 3     expr -> NAME NAME EQUAL NAME MINUS NAME
+Rule 3     expr -> NAME NAME EQUAL NAME EQUAL NAME
 Rule 4     expr -> NAME NAME EQUAL NAME DIVIDE NAME
 Rule 5     expr -> NAME NAME EQUAL NAME TIMES NAME
 Rule 6     expr -> NAME NAME MINUS SENT
 Rule 7     expr -> NAME NAME
 Rule 8     SENT -> expr
-Rule 9     expr -> NAME NAME LKAKKO NAME RKAKKO LNAMI
-Rule 10    expr -> NAME NAME IF1 NAME LNAMI
-Rule 11    expr -> NAME NAME IF2 NAME LNAMI
-Rule 12    expr -> NAME NAME EQUAL EQUAL NAME LNAMI
-Rule 13    expr -> NAME NAME LNAMI
-Rule 14    expr -> NAME LKAKKO NAME RKAKKO
-Rule 15    expr -> NUMBER
+Rule 9     expr -> NAME NAME LKAKKO NAME RKAKKO EQUAL NAME LNAMI
+Rule 10    expr -> NAME LKAKKO NAME RKAKKO
+Rule 11    expr -> NAME NAME IF1 NAME LNAMI
+Rule 12    expr -> NAME NAME IF2 NAME LNAMI
+Rule 13    expr -> NAME NAME EQUAL EQUAL NAME LNAMI
+Rule 14    expr -> NAME NAME LNAMI
 
 Terminals, with rules where they appear
 
 DIVIDE               : 4
-EQUAL                : 1 2 3 4 5 12 12
-IF1                  : 10
-IF2                  : 11
-LKAKKO               : 9 14
-LNAMI                : 9 10 11 12 13
-MINUS                : 3 6
-NAME                 : 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 7 7 9 9 9 10 10 10 11 11 11 12 12 12 13 13 14 14
-NUMBER               : 15
+EQUAL                : 1 2 3 3 4 5 9 13 13
+IF1                  : 11
+IF2                  : 12
+LKAKKO               : 9 10
+LNAMI                : 9 11 12 13 14
+MINUS                : 6
+NAME                 : 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 7 7 9 9 9 9 10 10 11 11 11 12 12 12 13 13 13 14 14
 PLUS                 : 2
-RKAKKO               : 9 14
+RKAKKO               : 9 10
 STA                  : 
 TIMES                : 5
 error                : 
@@ -52,21 +50,19 @@ state 0
     (0) S' -> . expr
     (1) expr -> . NAME NAME EQUAL NAME
     (2) expr -> . NAME NAME EQUAL NAME PLUS NAME
-    (3) expr -> . NAME NAME EQUAL NAME MINUS NAME
+    (3) expr -> . NAME NAME EQUAL NAME EQUAL NAME
     (4) expr -> . NAME NAME EQUAL NAME DIVIDE NAME
     (5) expr -> . NAME NAME EQUAL NAME TIMES NAME
     (6) expr -> . NAME NAME MINUS SENT
     (7) expr -> . NAME NAME
-    (9) expr -> . NAME NAME LKAKKO NAME RKAKKO LNAMI
-    (10) expr -> . NAME NAME IF1 NAME LNAMI
-    (11) expr -> . NAME NAME IF2 NAME LNAMI
-    (12) expr -> . NAME NAME EQUAL EQUAL NAME LNAMI
-    (13) expr -> . NAME NAME LNAMI
-    (14) expr -> . NAME LKAKKO NAME RKAKKO
-    (15) expr -> . NUMBER
+    (9) expr -> . NAME NAME LKAKKO NAME RKAKKO EQUAL NAME LNAMI
+    (10) expr -> . NAME LKAKKO NAME RKAKKO
+    (11) expr -> . NAME NAME IF1 NAME LNAMI
+    (12) expr -> . NAME NAME IF2 NAME LNAMI
+    (13) expr -> . NAME NAME EQUAL EQUAL NAME LNAMI
+    (14) expr -> . NAME NAME LNAMI
 
     NAME            shift and go to state 2
-    NUMBER          shift and go to state 3
 
     expr                           shift and go to state 1
 
@@ -80,195 +76,193 @@ state 2
 
     (1) expr -> NAME . NAME EQUAL NAME
     (2) expr -> NAME . NAME EQUAL NAME PLUS NAME
-    (3) expr -> NAME . NAME EQUAL NAME MINUS NAME
+    (3) expr -> NAME . NAME EQUAL NAME EQUAL NAME
     (4) expr -> NAME . NAME EQUAL NAME DIVIDE NAME
     (5) expr -> NAME . NAME EQUAL NAME TIMES NAME
     (6) expr -> NAME . NAME MINUS SENT
     (7) expr -> NAME . NAME
-    (9) expr -> NAME . NAME LKAKKO NAME RKAKKO LNAMI
-    (10) expr -> NAME . NAME IF1 NAME LNAMI
-    (11) expr -> NAME . NAME IF2 NAME LNAMI
-    (12) expr -> NAME . NAME EQUAL EQUAL NAME LNAMI
-    (13) expr -> NAME . NAME LNAMI
-    (14) expr -> NAME . LKAKKO NAME RKAKKO
+    (9) expr -> NAME . NAME LKAKKO NAME RKAKKO EQUAL NAME LNAMI
+    (10) expr -> NAME . LKAKKO NAME RKAKKO
+    (11) expr -> NAME . NAME IF1 NAME LNAMI
+    (12) expr -> NAME . NAME IF2 NAME LNAMI
+    (13) expr -> NAME . NAME EQUAL EQUAL NAME LNAMI
+    (14) expr -> NAME . NAME LNAMI
 
-    NAME            shift and go to state 4
-    LKAKKO          shift and go to state 5
+    NAME            shift and go to state 3
+    LKAKKO          shift and go to state 4
 
 
 state 3
 
-    (15) expr -> NUMBER .
-
-    $end            reduce using rule 15 (expr -> NUMBER .)
-
-
-state 4
-
     (1) expr -> NAME NAME . EQUAL NAME
     (2) expr -> NAME NAME . EQUAL NAME PLUS NAME
-    (3) expr -> NAME NAME . EQUAL NAME MINUS NAME
+    (3) expr -> NAME NAME . EQUAL NAME EQUAL NAME
     (4) expr -> NAME NAME . EQUAL NAME DIVIDE NAME
     (5) expr -> NAME NAME . EQUAL NAME TIMES NAME
     (6) expr -> NAME NAME . MINUS SENT
     (7) expr -> NAME NAME .
-    (9) expr -> NAME NAME . LKAKKO NAME RKAKKO LNAMI
-    (10) expr -> NAME NAME . IF1 NAME LNAMI
-    (11) expr -> NAME NAME . IF2 NAME LNAMI
-    (12) expr -> NAME NAME . EQUAL EQUAL NAME LNAMI
-    (13) expr -> NAME NAME . LNAMI
+    (9) expr -> NAME NAME . LKAKKO NAME RKAKKO EQUAL NAME LNAMI
+    (11) expr -> NAME NAME . IF1 NAME LNAMI
+    (12) expr -> NAME NAME . IF2 NAME LNAMI
+    (13) expr -> NAME NAME . EQUAL EQUAL NAME LNAMI
+    (14) expr -> NAME NAME . LNAMI
 
-    EQUAL           shift and go to state 6
-    MINUS           shift and go to state 7
+    EQUAL           shift and go to state 5
+    MINUS           shift and go to state 6
     $end            reduce using rule 7 (expr -> NAME NAME .)
-    LKAKKO          shift and go to state 8
-    IF1             shift and go to state 10
-    IF2             shift and go to state 11
-    LNAMI           shift and go to state 9
+    LKAKKO          shift and go to state 7
+    IF1             shift and go to state 9
+    IF2             shift and go to state 10
+    LNAMI           shift and go to state 8
+
+
+state 4
+
+    (10) expr -> NAME LKAKKO . NAME RKAKKO
+
+    NAME            shift and go to state 11
 
 
 state 5
 
-    (14) expr -> NAME LKAKKO . NAME RKAKKO
+    (1) expr -> NAME NAME EQUAL . NAME
+    (2) expr -> NAME NAME EQUAL . NAME PLUS NAME
+    (3) expr -> NAME NAME EQUAL . NAME EQUAL NAME
+    (4) expr -> NAME NAME EQUAL . NAME DIVIDE NAME
+    (5) expr -> NAME NAME EQUAL . NAME TIMES NAME
+    (13) expr -> NAME NAME EQUAL . EQUAL NAME LNAMI
 
     NAME            shift and go to state 12
+    EQUAL           shift and go to state 13
 
 
 state 6
-
-    (1) expr -> NAME NAME EQUAL . NAME
-    (2) expr -> NAME NAME EQUAL . NAME PLUS NAME
-    (3) expr -> NAME NAME EQUAL . NAME MINUS NAME
-    (4) expr -> NAME NAME EQUAL . NAME DIVIDE NAME
-    (5) expr -> NAME NAME EQUAL . NAME TIMES NAME
-    (12) expr -> NAME NAME EQUAL . EQUAL NAME LNAMI
-
-    NAME            shift and go to state 13
-    EQUAL           shift and go to state 14
-
-
-state 7
 
     (6) expr -> NAME NAME MINUS . SENT
     (8) SENT -> . expr
     (1) expr -> . NAME NAME EQUAL NAME
     (2) expr -> . NAME NAME EQUAL NAME PLUS NAME
-    (3) expr -> . NAME NAME EQUAL NAME MINUS NAME
+    (3) expr -> . NAME NAME EQUAL NAME EQUAL NAME
     (4) expr -> . NAME NAME EQUAL NAME DIVIDE NAME
     (5) expr -> . NAME NAME EQUAL NAME TIMES NAME
     (6) expr -> . NAME NAME MINUS SENT
     (7) expr -> . NAME NAME
-    (9) expr -> . NAME NAME LKAKKO NAME RKAKKO LNAMI
-    (10) expr -> . NAME NAME IF1 NAME LNAMI
-    (11) expr -> . NAME NAME IF2 NAME LNAMI
-    (12) expr -> . NAME NAME EQUAL EQUAL NAME LNAMI
-    (13) expr -> . NAME NAME LNAMI
-    (14) expr -> . NAME LKAKKO NAME RKAKKO
-    (15) expr -> . NUMBER
+    (9) expr -> . NAME NAME LKAKKO NAME RKAKKO EQUAL NAME LNAMI
+    (10) expr -> . NAME LKAKKO NAME RKAKKO
+    (11) expr -> . NAME NAME IF1 NAME LNAMI
+    (12) expr -> . NAME NAME IF2 NAME LNAMI
+    (13) expr -> . NAME NAME EQUAL EQUAL NAME LNAMI
+    (14) expr -> . NAME NAME LNAMI
 
     NAME            shift and go to state 2
-    NUMBER          shift and go to state 3
 
-    SENT                           shift and go to state 15
-    expr                           shift and go to state 16
+    SENT                           shift and go to state 14
+    expr                           shift and go to state 15
+
+state 7
+
+    (9) expr -> NAME NAME LKAKKO . NAME RKAKKO EQUAL NAME LNAMI
+
+    NAME            shift and go to state 16
+
 
 state 8
 
-    (9) expr -> NAME NAME LKAKKO . NAME RKAKKO LNAMI
+    (14) expr -> NAME NAME LNAMI .
 
-    NAME            shift and go to state 17
+    $end            reduce using rule 14 (expr -> NAME NAME LNAMI .)
 
 
 state 9
 
-    (13) expr -> NAME NAME LNAMI .
+    (11) expr -> NAME NAME IF1 . NAME LNAMI
 
-    $end            reduce using rule 13 (expr -> NAME NAME LNAMI .)
+    NAME            shift and go to state 17
 
 
 state 10
 
-    (10) expr -> NAME NAME IF1 . NAME LNAMI
+    (12) expr -> NAME NAME IF2 . NAME LNAMI
 
     NAME            shift and go to state 18
 
 
 state 11
 
-    (11) expr -> NAME NAME IF2 . NAME LNAMI
+    (10) expr -> NAME LKAKKO NAME . RKAKKO
 
-    NAME            shift and go to state 19
+    RKAKKO          shift and go to state 19
 
 
 state 12
 
-    (14) expr -> NAME LKAKKO NAME . RKAKKO
-
-    RKAKKO          shift and go to state 20
-
-
-state 13
-
     (1) expr -> NAME NAME EQUAL NAME .
     (2) expr -> NAME NAME EQUAL NAME . PLUS NAME
-    (3) expr -> NAME NAME EQUAL NAME . MINUS NAME
+    (3) expr -> NAME NAME EQUAL NAME . EQUAL NAME
     (4) expr -> NAME NAME EQUAL NAME . DIVIDE NAME
     (5) expr -> NAME NAME EQUAL NAME . TIMES NAME
 
     $end            reduce using rule 1 (expr -> NAME NAME EQUAL NAME .)
     PLUS            shift and go to state 21
-    MINUS           shift and go to state 22
-    DIVIDE          shift and go to state 23
-    TIMES           shift and go to state 24
+    EQUAL           shift and go to state 20
+    DIVIDE          shift and go to state 22
+    TIMES           shift and go to state 23
+
+
+state 13
+
+    (13) expr -> NAME NAME EQUAL EQUAL . NAME LNAMI
+
+    NAME            shift and go to state 24
 
 
 state 14
-
-    (12) expr -> NAME NAME EQUAL EQUAL . NAME LNAMI
-
-    NAME            shift and go to state 25
-
-
-state 15
 
     (6) expr -> NAME NAME MINUS SENT .
 
     $end            reduce using rule 6 (expr -> NAME NAME MINUS SENT .)
 
 
-state 16
+state 15
 
     (8) SENT -> expr .
 
     $end            reduce using rule 8 (SENT -> expr .)
 
 
+state 16
+
+    (9) expr -> NAME NAME LKAKKO NAME . RKAKKO EQUAL NAME LNAMI
+
+    RKAKKO          shift and go to state 25
+
+
 state 17
 
-    (9) expr -> NAME NAME LKAKKO NAME . RKAKKO LNAMI
+    (11) expr -> NAME NAME IF1 NAME . LNAMI
 
-    RKAKKO          shift and go to state 26
+    LNAMI           shift and go to state 26
 
 
 state 18
 
-    (10) expr -> NAME NAME IF1 NAME . LNAMI
+    (12) expr -> NAME NAME IF2 NAME . LNAMI
 
     LNAMI           shift and go to state 27
 
 
 state 19
 
-    (11) expr -> NAME NAME IF2 NAME . LNAMI
+    (10) expr -> NAME LKAKKO NAME RKAKKO .
 
-    LNAMI           shift and go to state 28
+    $end            reduce using rule 10 (expr -> NAME LKAKKO NAME RKAKKO .)
 
 
 state 20
 
-    (14) expr -> NAME LKAKKO NAME RKAKKO .
+    (3) expr -> NAME NAME EQUAL NAME EQUAL . NAME
 
-    $end            reduce using rule 14 (expr -> NAME LKAKKO NAME RKAKKO .)
+    NAME            shift and go to state 28
 
 
 state 21
@@ -280,51 +274,51 @@ state 21
 
 state 22
 
-    (3) expr -> NAME NAME EQUAL NAME MINUS . NAME
+    (4) expr -> NAME NAME EQUAL NAME DIVIDE . NAME
 
     NAME            shift and go to state 30
 
 
 state 23
 
-    (4) expr -> NAME NAME EQUAL NAME DIVIDE . NAME
+    (5) expr -> NAME NAME EQUAL NAME TIMES . NAME
 
     NAME            shift and go to state 31
 
 
 state 24
 
-    (5) expr -> NAME NAME EQUAL NAME TIMES . NAME
+    (13) expr -> NAME NAME EQUAL EQUAL NAME . LNAMI
 
-    NAME            shift and go to state 32
+    LNAMI           shift and go to state 32
 
 
 state 25
 
-    (12) expr -> NAME NAME EQUAL EQUAL NAME . LNAMI
+    (9) expr -> NAME NAME LKAKKO NAME RKAKKO . EQUAL NAME LNAMI
 
-    LNAMI           shift and go to state 33
+    EQUAL           shift and go to state 33
 
 
 state 26
 
-    (9) expr -> NAME NAME LKAKKO NAME RKAKKO . LNAMI
+    (11) expr -> NAME NAME IF1 NAME LNAMI .
 
-    LNAMI           shift and go to state 34
+    $end            reduce using rule 11 (expr -> NAME NAME IF1 NAME LNAMI .)
 
 
 state 27
 
-    (10) expr -> NAME NAME IF1 NAME LNAMI .
+    (12) expr -> NAME NAME IF2 NAME LNAMI .
 
-    $end            reduce using rule 10 (expr -> NAME NAME IF1 NAME LNAMI .)
+    $end            reduce using rule 12 (expr -> NAME NAME IF2 NAME LNAMI .)
 
 
 state 28
 
-    (11) expr -> NAME NAME IF2 NAME LNAMI .
+    (3) expr -> NAME NAME EQUAL NAME EQUAL NAME .
 
-    $end            reduce using rule 11 (expr -> NAME NAME IF2 NAME LNAMI .)
+    $end            reduce using rule 3 (expr -> NAME NAME EQUAL NAME EQUAL NAME .)
 
 
 state 29
@@ -336,35 +330,42 @@ state 29
 
 state 30
 
-    (3) expr -> NAME NAME EQUAL NAME MINUS NAME .
-
-    $end            reduce using rule 3 (expr -> NAME NAME EQUAL NAME MINUS NAME .)
-
-
-state 31
-
     (4) expr -> NAME NAME EQUAL NAME DIVIDE NAME .
 
     $end            reduce using rule 4 (expr -> NAME NAME EQUAL NAME DIVIDE NAME .)
 
 
-state 32
+state 31
 
     (5) expr -> NAME NAME EQUAL NAME TIMES NAME .
 
     $end            reduce using rule 5 (expr -> NAME NAME EQUAL NAME TIMES NAME .)
 
 
+state 32
+
+    (13) expr -> NAME NAME EQUAL EQUAL NAME LNAMI .
+
+    $end            reduce using rule 13 (expr -> NAME NAME EQUAL EQUAL NAME LNAMI .)
+
+
 state 33
 
-    (12) expr -> NAME NAME EQUAL EQUAL NAME LNAMI .
+    (9) expr -> NAME NAME LKAKKO NAME RKAKKO EQUAL . NAME LNAMI
 
-    $end            reduce using rule 12 (expr -> NAME NAME EQUAL EQUAL NAME LNAMI .)
+    NAME            shift and go to state 34
 
 
 state 34
 
-    (9) expr -> NAME NAME LKAKKO NAME RKAKKO LNAMI .
+    (9) expr -> NAME NAME LKAKKO NAME RKAKKO EQUAL NAME . LNAMI
 
-    $end            reduce using rule 9 (expr -> NAME NAME LKAKKO NAME RKAKKO LNAMI .)
+    LNAMI           shift and go to state 35
+
+
+state 35
+
+    (9) expr -> NAME NAME LKAKKO NAME RKAKKO EQUAL NAME LNAMI .
+
+    $end            reduce using rule 9 (expr -> NAME NAME LKAKKO NAME RKAKKO EQUAL NAME LNAMI .)
 

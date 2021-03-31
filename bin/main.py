@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
+
+# ====================
 #　正規表現はいらない
 #　正規表現はこの世から消えるべき
 # 正規表現死ね
-#=====================~
+#=====================
 
-# -*- coding: utf-8 -*-
 import ply.lex as lex 
 import ply.yacc as yacc
 import sys
@@ -13,6 +15,7 @@ ase.truncate(0)
 
 i = 0
 lis = []
+arglis = []
 jampc = 0
 dic = 0
 func = {}
@@ -29,7 +32,6 @@ def dictj( dick, a, b ):
 
 # トークンリスト 常に必須
 tokens = (
-    'NUMBER',
     'PLUS',
     'MINUS',
     'TIMES',
@@ -46,24 +48,24 @@ tokens = (
 
 t_ignore = ' \t'
 t_PLUS   = r'\+'
-t_MINUS  = r'-'
 t_TIMES  = r'\*'
 t_DIVIDE = r'/'
-t_EQUAL  = r'\='
 t_LKAKKO = r'\('
 t_RKAKKO = r'\)'
 t_LNAMI = r'{'
 t_IF1    = r">"
 t_IF2    = r"<"
 
-def t_NAME(t):
-    r"[a-zA-Z0-9&\,@}]+"
+def t_EQUAL(t):
+    r"[<\-=>]+"
     return t
 
+def t_MINUS(t):
+    r"[\-]+"
+    return t
 
-def t_NUMBER(t):
-    r'\d+'
-    t.value = int(t.value)
+def t_NAME(t):
+    r"[a-zA-Z0-9&>\,-@}]+"
     return t
 
 
@@ -100,7 +102,7 @@ def p_addandmov(p):
 
 
 def p_subandmov(p):
-    "expr : NAME NAME EQUAL NAME MINUS NAME"
+    "expr : NAME NAME EQUAL NAME EQUAL NAME"
     global dic
     ase.write( "sub "+p[4]+", "+ p[6]+";\n" )
     ase.write( "mode>int;\n" )
@@ -132,7 +134,7 @@ def p_msg(p):
         ase.write( "msg "+p[2]+";"+"\n" )
     if p[1] == "return":
         global funcname
-        ase.write( "ret "+funcname.split( "(" )[0]+", "+p[2]+";\nend;" )
+        ase.write( "ret "+funcname.split( "(" )[0]+", "+p[2]+";\nend;\n\n" )
 
 def p_SENT(p):
     "SENT : expr"
@@ -140,60 +142,65 @@ def p_SENT(p):
 
 
 def p_define(p):
-    "expr : NAME NAME LKAKKO NAME RKAKKO LNAMI"
-    global funcname, func, dic, i
-    dic = 0
-    funcname = p[2]+"("+p[4]+")"
-    ase.write( "\n"+funcname+":"+"\n" )
-    lis.append( funcname.split("(")[0] )
-
-    if "," in p[4]:
-        for data in p[4].split( "," ):
-            ase.write( "pop "+data+";\n" )
+    "expr : NAME NAME LKAKKO NAME RKAKKO EQUAL NAME LNAMI"
+    #TODO : call
+    global funcname, arglis
+    funcname = p[2]
+    if p[6] == "->":
+        ase.write( p[2]+"("+p[4]+")"+":\nfode>"+p[7]+";\n" )
+    
     else:
-        ase.write( "pop "+p[4]+";\n" )
-    i+=1
+        pass
+
+    if "," in p[4].replace(" ", ""):
+        arglis = p[4].split(",")
+        for i in range( len( arglis ) ) :
+            if arglis[i].startswith( "int" ):
+                ase.write( "mode>int;\npop "+arglis[i].split("int")[1]+";\n" )
+            
+            elif arglis[i].startswith( "str" ):
+                ase.write( "mode>str;\npop "+arglis[i].split("str")[1]+";\n" )
+    
+    else:
+        
+        if p[4].startswith( "int" ):
+            ase.write( "mode>int;\npop "+p[4].split("int")[1]+";\n" )
+        
+        elif p[4].startswith( "str" ):
+            ase.write( "mode>str;\npop "+p[4].split("str")[1]+";\n" )
+
+
+def p_call(p):
+    "expr : NAME LKAKKO NAME RKAKKO"
+    ase.write( "call "+p[1]+"["+p[3]+"];\n" )
 
 
 def p_if(p):
     "expr : NAME NAME IF1 NAME LNAMI"
     global jampc
-    ase.write( "jnp "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str( jampc )+"(<all>):\n"+"\npop <all>;\n" )
+    ase.write( "jnp "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str( jampc )+"():\n" )
     jampc+=1
 
 
 def p_if2(p):
     "expr : NAME NAME IF2 NAME LNAMI"
     global jampc
-    ase.write( "ja "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str(jampc)+"(<all>):\n"+"\npop <all>;\n" )
+    ase.write( "ja "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str(jampc)+"():\n" )
     jampc+=1
 
 
 def p_if3(p):
     "expr : NAME NAME EQUAL EQUAL NAME LNAMI"
     global jampc
-    ase.write( "jae "+p[2]+", "+p[5]+", L"+str( jampc )+";"+"\n"+"L"+str(jampc)+"(<all>):\n"+"\npop <all>;\n" )
+    ase.write( "jae "+p[2]+", "+p[5]+", L"+str( jampc )+";"+"\n"+"L"+str(jampc)+"():\n" )
     jampc+=1
 
 
 def p_while(p):
     "expr : NAME NAME LNAMI"
     global jampc
-    ase.write( "jmp L"+str( jampc )+", "+p[2]+";\n\nL"+str( jampc )+"(<all>):\npop <all>;\n" )
+    ase.write( "jmp L"+str( jampc )+", "+p[2]+";\n\nL"+str( jampc )+"():\n" )
     jampc+=1
-
-
-def p_call(p):
-    "expr : NAME LKAKKO NAME RKAKKO"
-    if p[1] in lis:
-        ase.write( "call "+p[1]+"["+p[3]+"];"+"\n" )
-    else:
-        ase.write( p[1]+"("+p[3]+")"+":\n" )
-
-
-def p_expr2NUM( p ) :
-    'expr : NUMBER'
-    p[0] = p[1]
 
 
 def p_error(p):
@@ -204,14 +211,18 @@ parser = yacc.yacc()
 
 
 if __name__ == '__main__':
+    global linsc
+    linsc = 0
     file = open( sys.argv[1], "r" )
-    data = file.read().replace( "}", "" ).split("    ")
+    data = file.read().replace( "}", "" ).replace("\n", "    ").split("    ")
     file.close()
     for i in range( len(data) ):
-        if "//" in data[i]:
-            data[i] = data[i].split( "//" )[0]
+        if data[i].startswith("fn"):
+            data[i] = data[i].replace(":", "")
         lexer.input(data[i])
         parser.parse(data[i])
-        print(data[i])
+        linsc+=1
 
+# !不適切!
 #死ねっ真rっ日sjhねh新芽rhシネh市jねhしん絵hしね死ね支援しねhシネ日sねしねh死ね死ね死ね死ね死ねあしね支援支援死ね死ね死ね死ね死ね死ね死ね氏うねしうね
+# !不適切!

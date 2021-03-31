@@ -1,9 +1,15 @@
-
-sub(w):
-pop w;
-main(0):
+sub(intx):
+fode>int;
 mode>int;
-mov x1, 12;
-print(x1):
-ret sub, 0;
+pop x;
+ret sub, 12;;
 end;
+
+main(intspeace):
+fode>int;
+mode>int;
+pop speace;
+call print[sub];
+ret main, 0;
+end;
+
