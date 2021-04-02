@@ -4,17 +4,18 @@ int main( int argc, char **arg ){
     string data, name = arg[1], funcs;
     stringstream ss, ss2;
     fstream ofs;
-    ifstream ifs( name+"s", ios::binary|ios::in );
+    ifstream ifs( split( name, "." )[0]+".del", ios::in );
     ofs.open ( split( name, "." )[0], ios::out|ios::binary );
     int fc = 0;
     vector<string> impv;
+
 
     while ( getline( ifs, data ) ) {
         if ( data.find( "call" ) != string::npos ) {
             funcs+=split( split( data, "call " )[1], "[" )[0];
         }
         if ( data.find( ":" ) != string::npos ) {
-            funcs = replace( funcs, split( data, "[" )[0] );
+            funcs = replace( funcs, split( data, "(" )[0] );
         }
         for ( int i = 0; i < data.size();i++ ) {
             string data2 = data.substr( i, data.size()-(data.size()-1) );
@@ -23,10 +24,9 @@ int main( int argc, char **arg ){
             }
         }
     }
-
-    impv = import( funcs, "include/dango.rh" );
-
-    int ii = 0;
+/*
+    impv = import( funcs, "include/dango.rhs" );
+    
     for ( int i = 0; i < impv.size(); i++ ) {
         for ( int ii = 0; ii < impv[i].size();ii++ ) {
             string data2 = impv[i].substr( ii, impv[ii].size()-(impv[ii].size()-1) );
@@ -36,8 +36,8 @@ int main( int argc, char **arg ){
         }
     }
 
+    ofs << ss2.str() << flush;*/    
     ofs << ss.str() << flush;
-    ofs << ss2.str() << flush;
     ofs.close();
     ifs.close();
 

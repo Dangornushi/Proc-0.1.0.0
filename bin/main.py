@@ -177,7 +177,7 @@ def p_call(p):
 
 def p_if(p):
     "expr : NAME NAME IF1 NAME LNAMI"
-    global jampc
+    global jampc, funcname
     ase.write( "jnp "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str( jampc )+"():\n" )
     jampc+=1
 
@@ -199,7 +199,7 @@ def p_if3(p):
 def p_while(p):
     "expr : NAME NAME LNAMI"
     global jampc
-    ase.write( "jmp L"+str( jampc )+", "+p[2]+";\n\nL"+str( jampc )+"():\n" )
+    ase.write( "jmp L"+str( jampc )+", "+p[2]+";\n\nL"+str( jampc )+", "+p[2]+"():\n" )
     jampc+=1
 
 

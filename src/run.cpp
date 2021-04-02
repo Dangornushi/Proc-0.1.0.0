@@ -6,7 +6,7 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
     string vdata, ans, a, b, mode, fode, anser;
     stringstream ss, ss2;
 
-    int y, x, popc=0, callc=0;
+    int y, x, popc=-1, callc=0;
     for ( int i = 0; i < vec.size(); i++ ) {
         vdata = vec[i];
         vdata = regex_replace( vdata, regex("22"),"20");
@@ -41,7 +41,12 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                     cout << strvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
                 }
                 else {
-                    cout << intvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
+                    if ( intvall[ strpri( split( vdata, "6d736720" )[1] ) ] != 0 ) {
+                        cout << intvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
+                    }
+                    else {
+                        cout << strvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
+                    }
                 }
             }
 
@@ -98,11 +103,19 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 }
                 else {
                     arg2 = strpri( arg );
-                    strvall2 [ to_string( callc ) ] = strvall [ arg2 ];
+                    strvall2 [ to_string( callc ) ] = strvall [ arg2 ] ;
                     intvall2 [ to_string( callc ) ] = intvall [ arg2 ] ;
                     callc++;
                 }
-                VM( func, split( split( vdata, "63616c6c20" )[1], "5b" )[0], intvall2, strvall2, loopj );
+
+                intvall.clear();
+                strvall.clear();
+
+                intvall = intvall2;
+                strvall = strvall2;
+
+
+                //VM( func, split( split( vdata, "63616c6c20" )[1], "5b" )[0], intvall, strvall, loopj );
             }
             if ( vdata.find( "6a6e7020" ) != string::npos ) {
                 string base, c, badata;
@@ -159,27 +172,6 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 intvall [ arg ] = intvall[ to_string( popc ) ];
                 popc++;
             }
-            if ( vdata.find( "6a6d7020" ) != string::npos ) {
-                /*
-                ? this is "while"
-                ? name = call function`s name
-                ? arg = loop count
-                */
-                string name = split( split( vdata, "2c" )[0], "20" )[1];
-                string arg = strpri( split( vdata, "2c20" )[1] );
-                if ( intkeyfind( intvall, arg ) ) {
-                    for ( int i = 0; i < intvall[arg]; ++i ) {
-                        VM( func, name, intvall, strvall, loopj );
-                        loopj++;
-                    }
-                }
-                else {
-                    for ( int i = 0; i < atoi( arg.c_str() ); ++i ) {
-                        VM( func, name, intvall, strvall, loopj );
-                        loopj++;
-                    }
-                }
-            }
             if ( vdata.find( "72657420" ) != string::npos ) {
                 // TODO : This is return ( ret )
                 string base = split( vdata, "72657420" )[1];
@@ -198,7 +190,7 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 else
                 if ( fode == "str" ) {
                     strvall [ strpri( funcn ) ] = strpri( arg.c_str() ) ;
-                }
+                }// TODO
             }
             if ( vdata.find( "666f64653e" ) != string::npos ) {
                 fode = strpri( split( vdata, "3e" )[1] );
@@ -224,13 +216,14 @@ int main( int argc, char **arg ){
         data += data2;
     }
     vec = split( data, "3b" );
+    funcname = "6d61696e";
     for ( int i = 0; i < vec.size(); i++ ) {
         vec[i] = vec[i] + "3b";
         if ( vec[i].find("3a") != string::npos ) {
-            funcname = split( vec[i], "28" )[0];
             func[funcname] += split( vec[i], "3a" )[1];
         }
-        else {
+        else 
+        if ( vec[i] != "3b" ) {
             func[funcname] += vec[i];
         }
     }

@@ -1,8 +1,7 @@
-fn sub(int:x) -> int {
-    return 12;
-}
-
 fn main( int:speace ) -> int {
-    print(sub)
-    return 0
+    int x = 12
+    while 12 {
+        msg x
+    }
+    return 0                                        
 }

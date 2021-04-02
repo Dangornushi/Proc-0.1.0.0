@@ -1,0 +1,50 @@
+
+main(intspeace):
+fode>int;
+mode>int;
+pop speace;
+mode>int;
+mov x, 12;
+
+mode>int;
+mov a, 10;
+msg a;
+mode>int;
+mov a, 10;
+msg a;
+mode>int;
+mov a, 10;
+msg a;
+mode>int;
+mov a, 10;
+msg a;
+mode>int;
+mov a, 10;
+msg a;
+mode>int;
+mov a, 10;
+msg a;
+mode>int;
+mov a, 10;
+msg a;
+mode>int;
+mov a, 10;
+msg a;
+mode>int;
+mov a, 10;
+msg a;
+mode>int;
+mov a, 10;
+msg a;
+mode>int;
+mov a, 10;
+msg a;
+
+mode>int;
+mov a, 10;
+msg a;
+ret main, 0;
+end;
+;
+
+;
