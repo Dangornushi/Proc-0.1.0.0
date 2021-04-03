@@ -24,19 +24,7 @@ int main( int argc, char **arg ){
             }
         }
     }
-/*
-    impv = import( funcs, "include/dango.rhs" );
-    
-    for ( int i = 0; i < impv.size(); i++ ) {
-        for ( int ii = 0; ii < impv[i].size();ii++ ) {
-            string data2 = impv[i].substr( ii, impv[ii].size()-(impv[ii].size()-1) );
-            for (const auto &item : data2) {
-                ss2 << hex << int(item);
-            }
-        }
-    }
 
-    ofs << ss2.str() << flush;*/    
     ofs << ss.str() << flush;
     ofs.close();
     ifs.close();

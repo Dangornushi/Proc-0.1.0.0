@@ -3,13 +3,24 @@ fode>int;
 mode>int;
 pop speace;
 mode>int;
-mov x, 12;
-jmp L0, 12;
-
-L0, 12():
-mode>int;
-mov a, 10;
-msg a;
+mov x, 14;
+call print[x];
 ret main, 0;
+end;
+
+putint(intword):
+fode>int;
+mode>int;
+pop word;
+msg word;
+ret putint, 0;
+end;
+
+print(strword):
+fode>int;
+mode>str;
+pop word;
+msg word;
+ret print, 0;
 end;
 

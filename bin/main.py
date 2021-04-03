@@ -178,7 +178,6 @@ def p_call(p):
 def p_if(p):
     "expr : NAME NAME IF1 NAME LNAMI"
     global jampc, funcname
-    ase.write( "jnp "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str( jampc )+"():\n" )
     jampc+=1
 
 
@@ -190,9 +189,14 @@ def p_if2(p):
 
 
 def p_if3(p):
-    "expr : NAME NAME EQUAL EQUAL NAME LNAMI"
+    "expr : NAME NAME EQUAL NAME LNAMI"
     global jampc
-    ase.write( "jae "+p[2]+", "+p[5]+", L"+str( jampc )+";"+"\n"+"L"+str(jampc)+"():\n" )
+    if p[3] == "==":
+        ase.write( "jae "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str(jampc)+"():\n" )
+    elif p[3] == ">":
+        ase.write( "jnp "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str( jampc )+"():\n" )
+    elif p[3] == "<":
+        ase.write( "ja "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str( jampc )+"():\n" )
     jampc+=1
 
 
@@ -217,12 +221,15 @@ if __name__ == '__main__':
     data = file.read().replace( "}", "" ).replace("\n", "    ").split("    ")
     file.close()
     for i in range( len(data) ):
+        if data[i].startswith("include"):
+            openname = data[i].split( " " )[1]
+            #print()
+            data += open( openname, "r" ).read().replace( "}", "" ).replace("\n", "    ").split("    ")
+            #ase.write(  )
+    
+    for i in range( len(data) ):
         if data[i].startswith("fn"):
-            data[i] = data[i].replace(":", "")
+                data[i] = data[i].replace(":", "")
         lexer.input(data[i])
         parser.parse(data[i])
         linsc+=1
-
-# !不適切!
-#死ねっ真rっ日sjhねh新芽rhシネh市jねhしん絵hしね死ね支援しねhシネ日sねしねh死ね死ね死ね死ね死ねあしね支援支援死ね死ね死ね死ね死ね死ね死ね氏うねしうね
-# !不適切!

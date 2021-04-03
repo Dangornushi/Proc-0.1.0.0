@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'DIVIDE EQUAL IF1 IF2 LKAKKO LNAMI MINUS NAME PLUS RKAKKO STA TIMESexpr : NAME NAME EQUAL NAMEexpr : NAME NAME EQUAL NAME PLUS NAMEexpr : NAME NAME EQUAL NAME EQUAL NAMEexpr : NAME NAME EQUAL NAME DIVIDE NAMEexpr : NAME NAME EQUAL NAME TIMES NAMEexpr : NAME NAME MINUS SENTexpr : NAME NAMESENT : exprexpr : NAME NAME LKAKKO NAME RKAKKO EQUAL NAME LNAMIexpr : NAME LKAKKO NAME RKAKKOexpr : NAME NAME IF1 NAME LNAMIexpr : NAME NAME IF2 NAME LNAMIexpr : NAME NAME EQUAL EQUAL NAME LNAMIexpr : NAME NAME LNAMI'
+_lr_signature = 'DIVIDE EQUAL IF1 IF2 LKAKKO LNAMI MINUS NAME PLUS RKAKKO STA TIMESexpr : NAME NAME EQUAL NAMEexpr : NAME NAME EQUAL NAME PLUS NAMEexpr : NAME NAME EQUAL NAME EQUAL NAMEexpr : NAME NAME EQUAL NAME DIVIDE NAMEexpr : NAME NAME EQUAL NAME TIMES NAMEexpr : NAME NAME MINUS SENTexpr : NAME NAMESENT : exprexpr : NAME NAME LKAKKO NAME RKAKKO EQUAL NAME LNAMIexpr : NAME LKAKKO NAME RKAKKOexpr : NAME NAME IF1 NAME LNAMIexpr : NAME NAME IF2 NAME LNAMIexpr : NAME NAME EQUAL NAME LNAMIexpr : NAME NAME LNAMI'
     
-_lr_action_items = {'NAME':([0,2,4,5,6,7,9,10,13,20,21,22,23,33,],[2,3,11,12,2,16,17,18,24,28,29,30,31,34,]),'$end':([1,3,8,12,14,15,19,26,27,28,29,30,31,32,35,],[0,-7,-14,-1,-6,-8,-10,-11,-12,-3,-2,-4,-5,-13,-9,]),'LKAKKO':([2,3,],[4,7,]),'EQUAL':([3,5,12,25,],[5,13,20,33,]),'MINUS':([3,],[6,]),'IF1':([3,],[9,]),'IF2':([3,],[10,]),'LNAMI':([3,17,18,24,34,],[8,26,27,32,35,]),'RKAKKO':([11,16,],[19,25,]),'PLUS':([12,],[21,]),'DIVIDE':([12,],[22,]),'TIMES':([12,],[23,]),}
+_lr_action_items = {'NAME':([0,2,4,5,6,7,9,10,19,20,21,22,31,],[2,3,11,12,2,15,16,17,27,28,29,30,32,]),'$end':([1,3,8,12,13,14,18,23,25,26,27,28,29,30,33,],[0,-7,-14,-1,-6,-8,-10,-13,-11,-12,-3,-2,-4,-5,-9,]),'LKAKKO':([2,3,],[4,7,]),'EQUAL':([3,12,24,],[5,19,31,]),'MINUS':([3,],[6,]),'IF1':([3,],[9,]),'IF2':([3,],[10,]),'LNAMI':([3,12,16,17,32,],[8,23,25,26,33,]),'RKAKKO':([11,15,],[18,24,]),'PLUS':([12,],[20,]),'DIVIDE':([12,],[21,]),'TIMES':([12,],[22,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expr':([0,6,],[1,15,]),'SENT':([6,],[14,]),}
+_lr_goto_items = {'expr':([0,6,],[1,14,]),'SENT':([6,],[13,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -38,7 +38,7 @@ _lr_productions = [
   ('expr -> NAME NAME LKAKKO NAME RKAKKO EQUAL NAME LNAMI','expr',8,'p_define','main.py',145),
   ('expr -> NAME LKAKKO NAME RKAKKO','expr',4,'p_call','main.py',174),
   ('expr -> NAME NAME IF1 NAME LNAMI','expr',5,'p_if','main.py',179),
-  ('expr -> NAME NAME IF2 NAME LNAMI','expr',5,'p_if2','main.py',186),
-  ('expr -> NAME NAME EQUAL EQUAL NAME LNAMI','expr',6,'p_if3','main.py',193),
-  ('expr -> NAME NAME LNAMI','expr',3,'p_while','main.py',200),
+  ('expr -> NAME NAME IF2 NAME LNAMI','expr',5,'p_if2','main.py',185),
+  ('expr -> NAME NAME EQUAL NAME LNAMI','expr',5,'p_if3','main.py',192),
+  ('expr -> NAME NAME LNAMI','expr',3,'p_while','main.py',204),
 ]
