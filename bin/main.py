@@ -8,7 +8,7 @@
 
 import ply.lex as lex 
 import ply.yacc as yacc
-import sys
+import sys, os
 
 ase = open( sys.argv[1]+"s", "a" )
 ase.truncate(0)
@@ -65,7 +65,7 @@ def t_MINUS(t):
     return t
 
 def t_NAME(t):
-    r"[a-zA-Z0-9&>\,-@}]+"
+    r"[a-zA-Z0-9&>\,-@}\"]+"
     return t
 
 
@@ -223,13 +223,15 @@ if __name__ == '__main__':
     for i in range( len(data) ):
         if data[i].startswith("include"):
             openname = data[i].split( " " )[1]
-            #print()
             data += open( openname, "r" ).read().replace( "}", "" ).replace("\n", "    ").split("    ")
-            #ase.write(  )
-    
+
     for i in range( len(data) ):
         if data[i].startswith("fn"):
                 data[i] = data[i].replace(":", "")
         lexer.input(data[i])
         parser.parse(data[i])
         linsc+=1
+    if os.path.exists('parsetab.py'):
+        os.remove("parsetab.py")
+    if os.path.exists('parser.out'):
+        os.remove("parser.out")

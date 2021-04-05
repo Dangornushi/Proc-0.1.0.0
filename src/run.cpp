@@ -81,7 +81,7 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 }
             }
             if ( vdata.find( "63616c6c" ) != string::npos ) {
-                /* TODO : This is "call"
+                /*TODO : This is "call"
                 ？　（　より前の語句のみ格納されている、つまり呼び出しには　（　より前でのみ読み読み込みされれば良い。
                 ？　（　よりあとかつ　）　の前での語句のみを独自に読み取り変数の受け渡しに使用
                 ？　ただしそれには呼び出し時に引数を記述しなければならない
@@ -93,6 +93,8 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 vector<string> vec;
                 map<string, int>intvall2;
                 map<string, string>strvall2;
+                intvall2 = intvall;
+                strvall2 = strvall;
                 if ( arg.find( "2c" ) != string::npos ) {
                     vec = split( arg, "2c" );
                     for ( int i = 0; i < vec.size(); i++ ) {
@@ -108,11 +110,11 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                     callc++;
                 }
 
-                intvall.clear();
-                strvall.clear();
-
                 intvall = intvall2;
                 strvall = strvall2;
+
+                //intvall.clear();
+                //strvall.clear();
 
 
                 //VM( func, split( split( vdata, "63616c6c20" )[1], "5b" )[0], intvall, strvall, loopj );
@@ -200,7 +202,6 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
 }
 
 int main( int argc, char **arg ){
-    
     ifstream fin( split( arg[1], "." )[0], ios::in | ios::binary );
     string funcname, data;
     vector<string> vec;

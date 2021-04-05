@@ -1,10 +1,5 @@
 
-fn putint(int:word) -> int {
-    msg word
-    return 0
-}
-
-fn print(str:word) -> int {
+fn print(int:word) -> int {
     msg word
     return 0
 }

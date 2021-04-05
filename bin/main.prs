@@ -2,25 +2,30 @@ main(intspeace):
 fode>int;
 mode>int;
 pop speace;
-mode>int;
+mode>str;
 mov x, 14;
+mode>str;
+mov y, 12;
 call print[x];
+call print[y];
 ret main, 0;
 end;
 
-putint(intword):
+print(intword):
 fode>int;
 mode>int;
 pop word;
 msg word;
-ret putint, 0;
+ret print, 0;
 end;
 
-print(strword):
+wordcoal(strword,strword2):
 fode>int;
 mode>str;
 pop word;
-msg word;
-ret print, 0;
+mode>str;
+pop word2;
+call print[word];
+ret wordcoal, 0;
 end;
 

@@ -3,13 +3,25 @@ main(intspeace):
 fode>int;
 mode>int;
 pop speace;
-mode>int;
+mode>str;
 mov x, 14;
+mode>str;
+mov y, 12;
 call print[x];
 
-print(strword):
+print(intword):
 fode>int;
-mode>str;
+mode>int;
+pop word;
+msg word;
+ret print, 0;
+end;
+;
+call print[y];
+
+print(intword):
+fode>int;
+mode>int;
 pop word;
 msg word;
 ret print, 0;

@@ -1,0 +1,6 @@
+include include/dango.rh
+
+fn wordcoal(str:word,str:word2) -> int {
+    print( word )
+    return 0
+}
