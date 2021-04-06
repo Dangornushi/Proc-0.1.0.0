@@ -36,17 +36,12 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 intvall = calcproc( intvall, mark, mode, vdata );
             }
             if ( vdata.find( "6d736720" ) != string::npos ) {
-                if ( keyfind( strvall, strpri( split( vdata, "6d736720" )[1] )  ) &&
-                    intkeyfind(intvall, strpri( split( vdata, "6d736720" )[1] )  ) == false ) {
+                //msg
+                if ( keyfind( strvall, strpri( split( vdata, "6d736720" )[1] )  ) ) {
                     cout << strvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
                 }
-                else {
-                    if ( intvall[ strpri( split( vdata, "6d736720" )[1] ) ] != 0 ) {
-                        cout << intvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
-                    }
-                    else {
-                        cout << strvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
-                    }
+                if ( intkeyfind( intvall, strpri( split( vdata, "6d736720" )[1] )  ) ) {
+                    cout << intvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
                 }
             }
 
@@ -89,36 +84,24 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 ？　⇨　func : 呼び出しされる関数名
                 ？　⇨　 arg : 受け渡される変数名が加わる文字列
                 */
-                string arg = split( split( vdata, "5d" )[0], "5b" )[1], arg2;
+                string arg = strpri( split( split( vdata, "5d" )[0], "5b" )[1] ), arg2;
                 vector<string> vec;
-                map<string, int>intvall2;
-                map<string, string>strvall2;
-                intvall2 = intvall;
-                strvall2 = strvall;
                 if ( arg.find( "2c" ) != string::npos ) {
                     vec = split( arg, "2c" );
                     for ( int i = 0; i < vec.size(); i++ ) {
                         vec[i] = strpri(vec[i]);
-                        strvall2[ to_string(i) ] = strvall[ vec[i] ] ;
-                        intvall2[ to_string(i) ] = intvall[ vec[i] ] ;
+                        if ( mode == "str" ) strvall[ to_string(i) ] = strvall[ vec[i] ] ;
+                        if ( mode == "int" ) intvall[ to_string(i) ] = intvall[ vec[i] ] ;
                     }
                 }
                 else {
-                    arg2 = strpri( arg );
-                    strvall2 [ to_string( callc ) ] = strvall [ arg2 ] ;
-                    intvall2 [ to_string( callc ) ] = intvall [ arg2 ] ;
+                    if ( keyfind ( strvall, arg ) ) strvall [ to_string( callc ) ] = strvall [ arg ] ;
+                    if ( intkeyfind ( intvall, arg ) ) intvall [ to_string( callc ) ] = intvall [ arg ] ;
                     callc++;
                 }
 
-                intvall = intvall2;
-                strvall = strvall2;
-
-                //intvall.clear();
-                //strvall.clear();
-
-
-                //VM( func, split( split( vdata, "63616c6c20" )[1], "5b" )[0], intvall, strvall, loopj );
             }
+
             if ( vdata.find( "6a6e7020" ) != string::npos ) {
                 string base, c, badata;
                 base = split( vdata, "6a6e7020" )[1];
@@ -170,11 +153,11 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
             if ( vdata.find( "706f7020" ) != string::npos ) {
                 // TODO : This is "pop"
                 string arg = strpri( split( vdata, "706f7020" )[1]);
-                strvall [ arg ] = strvall[ to_string( popc ) ];
-                intvall [ arg ] = intvall[ to_string( popc ) ];
+                if ( mode == "str" ) strvall [ arg ] = strvall[ to_string( popc ) ];
+                if ( mode ==  "int" ) intvall [ arg ] = intvall[ to_string( popc ) ];
                 popc++;
             }
-            if ( vdata.find( "72657420" ) != string::npos ) {
+            if ( vdata.find( "726574" ) != string::npos ) {
                 // TODO : This is return ( ret )
                 string base = split( vdata, "72657420" )[1];
                 string funcn, arg;
@@ -192,7 +175,8 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 else
                 if ( fode == "str" ) {
                     strvall [ strpri( funcn ) ] = strpri( arg.c_str() ) ;
-                }// TODO
+                }
+                // TODO
             }
             if ( vdata.find( "666f64653e" ) != string::npos ) {
                 fode = strpri( split( vdata, "3e" )[1] );

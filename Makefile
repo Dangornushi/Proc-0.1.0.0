@@ -1,9 +1,12 @@
 all:
+	g++ -c src/parse.cpp -std=c++14
 	g++ -c src/comp.cpp -std=c++14
 	g++ -c src/define.cpp -std=c++14
 	g++ -c src/run.cpp -std=c++14
 	g++ -c src/proto.cpp -std=c++14
 	g++ -c src/editcode.cpp -std=c++14
+
+	g++ parse.o define.o -o bin/parser
 	g++ comp.o define.o -o bin/proc
 	g++ run.o define.o -o bin/prun
 	g++ proto.o define.o -o bin/proto

@@ -3,21 +3,19 @@ main(intspeace):
 fode>int;
 mode>int;
 pop speace;
-mode>str;
+mode>int;
 mov x, 14;
-mode>str;
-mov y, 12;
-call print[x];
+call subb2[x];
 
-print(intword):
+subb2(intword):
 fode>int;
 mode>int;
 pop word;
 msg word;
-ret print, 0;
+ret subb2, 12;
 end;
 ;
-call print[y];
+call print[subb2];
 
 print(intword):
 fode>int;

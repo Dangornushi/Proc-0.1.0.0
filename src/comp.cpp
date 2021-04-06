@@ -15,7 +15,7 @@ int main( int argc, char **arg ){
             funcs+=split( split( data, "call " )[1], "[" )[0];
         }
         if ( data.find( ":" ) != string::npos ) {
-            funcs = replace( funcs, split( data, "(" )[0] );
+            funcs = replace( funcs, split( data, "[" )[0] );
         }
         for ( int i = 0; i < data.size();i++ ) {
             string data2 = data.substr( i, data.size()-(data.size()-1) );

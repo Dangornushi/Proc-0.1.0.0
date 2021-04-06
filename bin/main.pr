@@ -1,11 +1,14 @@
-include include/dango.rh
-include include/string.rh
+@include include/dango.rh
+@include include/string.rh
 
+fn subb2( int:word ) -> int {
+    msg word
+    return 12
+}
 
 fn main( int:speace ) -> int {
-    str x = 14
-    str y = 12
-    print(x)
-    print(y)
-    return 0           
+    int x = 14
+    -> subb2[x]
+    -> print[subb2]
+    return 0
 }

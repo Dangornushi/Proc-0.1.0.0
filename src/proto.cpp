@@ -7,7 +7,7 @@ int main( int argc, char **arg ) {
     string edit = "./comp+ ";
     string name = arg[1];
 
-    string pythonrun = "python3 main.py "+name;
+    string pythonrun = "./parser "+name;
     edit = edit + name;
     comp = comp + arg[1];
     passbuf = passbuf + name;
